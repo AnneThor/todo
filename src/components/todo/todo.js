@@ -1,37 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 
+import { Container, Row, Col } from 'react-bootstrap';
 import './todo.scss';
 
-class ToDo extends React.Component {
+function ToDo() {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [],
-    };
-  }
+  const [list, setList] = useState([])
 
-  addItem = (item) => {
+  const addItem = (item) => {
     item._id = Math.random();
     item.complete = false;
-    this.setState({ list: [...this.state.list, item]});
+    let updList = list.concat(item)
+    setList(updList);
   };
 
-  toggleComplete = id => {
-
-    let item = this.state.list.filter(i => i._id === id)[0] || {};
+  const toggleComplete = (id) => {
+    let item = list.filter(item => item._id === id)[0] || {};
 
     if (item._id) {
       item.complete = !item.complete;
-      let list = this.state.list.map(listItem => listItem._id === item._id ? item : listItem);
-      this.setState({list});
+      let updList = list.map(task => task._id === item._id ? item : task);
+      setList(updList);
     }
 
   };
 
-  componentDidMount() {
+  // passing empty array to say it doesn't track state updates
+  // i.e. only happens once, at the first rendering
+  useEffect( () => {
     let list = [
       { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A'},
       { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A'},
@@ -40,34 +38,31 @@ class ToDo extends React.Component {
       { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B'},
     ];
 
-    this.setState({list});
-  }
+    setList(list);
+  }, [])
 
-  render() {
-    return (
-      <>
-        <header>
-          <h2>
-          There are {this.state.list.filter(item => !item.complete).length} Items To Complete
-          </h2>
+        // <h2>There are {list.filter(item => !item.complete).length} Items to Complete</h2>
+
+  return (
+    <Container fluid >
+      <Row>
+        <header className="header" data-testid="header">
+          {list.length} Tasks Remain!
         </header>
+      </Row>
+      <Row className="todo">
+        <Col>
+          <TodoForm handleSubmit={addItem} />
+        </Col>
+        <Col>
+          <TodoList
+            list = {list}
+            handleComplete ={toggleComplete} />
+        </Col>
+      </Row>
+    </Container>
+  );
 
-        <section className="todo">
-
-          <div>
-            <TodoForm handleSubmit={this.addItem} />
-          </div>
-
-          <div>
-            <TodoList
-              list={this.state.list}
-              handleComplete={this.toggleComplete}
-            />
-          </div>
-        </section>
-      </>
-    );
-  }
 }
 
 export default ToDo;
