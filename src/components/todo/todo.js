@@ -27,6 +27,11 @@ function ToDo() {
 
   };
 
+  // update doc title when list changes size
+  useEffect( () => {
+    document.title=`Task Manager: ${list.length} Open Tasks`
+  }, [list])
+
   // passing empty array to say it doesn't track state updates
   // i.e. only happens once, at the first rendering
   useEffect( () => {
