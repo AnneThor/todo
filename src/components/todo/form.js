@@ -1,49 +1,59 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { Form, Button } from 'react-bootstrap';
 
-class TodoForm extends React.Component {
+function TodoForm(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = { item: {} };
-  }
-  handleInputChange = e => {
-    this.setState({ item: {...this.state.item, [e.target.name]: e.target.value } });
-  };
+  const [item, setItem] = useState('')
+  const [level, setLevel] = useState('1')
+  const [person, setPerson] = useState('')
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
-    this.props.handleSubmit(this.state.item);
-    const item = {};
-    this.setState({item});
+    let newItem = { text: item, difficulty: level, assignee: person }
+    props.handleSubmit(newItem);
+    setItem('');
+    setLevel('1');
+    setPerson('');
   };
 
-  render() {
-    return (
-      <>
-        <h3>Add Item</h3>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            <span>To Do Item</span>
-            <input
-              name="text"
-              placeholder="Add To Do List Item"
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <label>
-            <span>Difficulty Rating</span>
-            <input defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={this.handleInputChange} />
-          </label>
-          <label>
-            <span>Assigned To</span>
-            <input type="text" name="assignee" placeholder="Assigned To" onChange={this.handleInputChange} />
-          </label>
-          <button>Add Item</button>
-        </form>
-      </>
-    );
-  }
+  return (
+    <>
+
+      <Form onSubmit={handleSubmit}>
+        <h3>Add & Assign Activities</h3>
+        <Form.Group controlId="formItem">
+          <Form.Label>New Task</Form.Label>
+          <Form.Control type="text"
+                        name="text"
+                        placeholder="Task Description"
+                        onChange={e => setItem(e.target.value)} />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicRange">
+          <Form.Label>Difficulty</Form.Label>
+          <Form.Control type="range"
+                        defaultValue="5"
+                        min="1" max="10" name="difficulty"
+                        onChange={e => setLevel(e.target.value)} />
+        </Form.Group>
+
+        <Form.Group controlId="formItem">
+          <Form.Label>Assign the Task</Form.Label>
+          <Form.Control type="text"
+                        name="assignee"
+                        placeholder="Name of Person"
+                        onChange={e => setPerson(e.target.value)} />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Create New Task
+        </Button>
+
+      </Form>
+    </>
+  );
+
 }
 
 export default TodoForm;

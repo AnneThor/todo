@@ -1,23 +1,22 @@
 import React from 'react';
+import { ListGroup } from 'react-bootstrap';
 
-class TodoList extends React.Component {
+function TodoList(props) {
 
-  render() {
-    return (
-      <ul>
-        {this.props.list.map(item => (
-          <li
-            className={`complete-${item.complete.toString()}`}
-            key={item._id}
-          >
-            <span onClick={() => this.props.handleComplete(item._id)}>
-              {item.text}
-            </span>
-          </li>
-        ))}
-      </ul>
-    );
-  }
+  return (
+    <ListGroup id="todo-list">
+      {props.list.map(item => (
+        <ListGroup.Item variant="dark"
+                        className={`complete-${item.complete.toString()}`}
+                        key={item._id} >
+          <span onClick={(e) => props.handleComplete(item._id)}>
+            {item.text}
+          </span>
+        </ListGroup.Item>
+      ))}
+    </ListGroup>
+  );
+
 }
 
 export default TodoList;
