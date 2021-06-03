@@ -10,31 +10,29 @@ body, html {
   margin: .5em auto;
   font-size: 1.75em;
   text-shadow: .25px .25px #61dbfb;
+  width: 100%;
+  text-align: center;
 }
 
-.todo {
-
-    Form {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 80%;
-      border: black solid 1px;
-      border-radius: 5px;
-      box-shadow: 1px 1px #61dbfb;
-      padding: .75em .75em;
-    }
-
-    #todo-list {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 80%;
-      border: black solid 1px;
-      border-radius: 5px;
-      box-shadow: 1px 1px #61dbfb;
-    }
-
+#todo-list {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80%;
+  border: black solid 1px;
+  border-radius: 5px;
+  box-shadow: 1px 1px #61dbfb;
 }
 
 .complete-true {
   text-decoration: line-through;
+}
+
+#form {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80%;
+  border: black solid 1px;
+  border-radius: 5px;
+  box-shadow: 1px 1px #61dbfb;
+  padding: .75em .75em;
 }

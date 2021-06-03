@@ -18,13 +18,12 @@ function TodoForm(props) {
   };
 
   return (
-    <>
-
-      <Form onSubmit={handleSubmit}>
+      <Form id="form" data-testid="form" onSubmit={handleSubmit}>
         <h3>Add & Assign Activities</h3>
         <Form.Group controlId="formItem">
           <Form.Label>New Task</Form.Label>
           <Form.Control type="text"
+                        data-testid="task-input"
                         name="text"
                         placeholder="Task Description"
                         onChange={e => setItem(e.target.value)} />
@@ -33,6 +32,7 @@ function TodoForm(props) {
         <Form.Group controlId="formBasicRange">
           <Form.Label>Difficulty</Form.Label>
           <Form.Control type="range"
+                        data-testid="difficulty"
                         defaultValue="5"
                         min="1" max="10" name="difficulty"
                         onChange={e => setLevel(e.target.value)} />
@@ -41,17 +41,17 @@ function TodoForm(props) {
         <Form.Group controlId="formItem">
           <Form.Label>Assign the Task</Form.Label>
           <Form.Control type="text"
+                        data-testid="personInput"
                         name="assignee"
                         placeholder="Name of Person"
                         onChange={e => setPerson(e.target.value)} />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" data-testid="task-submit">
           Create New Task
         </Button>
 
       </Form>
-    </>
   );
 
 }

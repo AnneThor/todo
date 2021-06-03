@@ -4,11 +4,11 @@ import { Navbar, Form, FormControl, Button } from 'react-bootstrap';
 function Nav() {
 
   return (
-    <Navbar className="bg-light justify-content-between">
-      <h2>Task Manager</h2>
+    <Navbar bg="dark justify-content-between" variant="dark">
+      <Navbar.Brand>Task Manager</Navbar.Brand>
       <Form inline>
-        <FormControl type="text" placeholder="Username" className=" mr-sm-2" />
-        <Button type="submit">Login</Button>
+        <FormControl type="text" placeholder="Username" className="mr-sm-2" />
+        <Button variant="outline-info" type="submit">Login</Button>
       </Form>
     </Navbar>
   )
