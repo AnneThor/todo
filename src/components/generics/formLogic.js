@@ -3,7 +3,7 @@ import { useState } from 'react';
 // the below is a generic business logic for a form
 // that collects and returns inputs in an object
 // callback param function handles form submit
-const formLogic = (callback) = {
+function formLogic(callback) {
 
   const [formData, setFormData] = useState({});
 
@@ -16,6 +16,7 @@ const formLogic = (callback) = {
 
   function handleSubmit(e) {
     e.preventDefault();
+    e.target.reset();
     callback(formData);
   }
 
