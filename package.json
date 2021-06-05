@@ -6,6 +6,8 @@
   "main": "src/index.js",
   "dependencies": {
     "@testing-library/react": "^11.2.7",
+    "axios": "^0.21.1",
+    "axios-hooks": "^2.6.3",
     "bootstrap": "^4.6.0",
     "g": "^2.0.1",
     "msw": "^0.29.0",

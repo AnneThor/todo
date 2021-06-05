@@ -1,22 +1,23 @@
 import React, {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import formLogic from '../generics/formLogic.js';
+import axios from 'axios';
 
 function TodoForm(props) {
 
-  const [item, setItem] = useState('')
-  const [level, setLevel] = useState('1')
-  const [person, setPerson] = useState('')
+  const base = 'https://at-taskmanager.herokuapp.com/task';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    e.target.reset();
-    let newItem = { text: item, difficulty: level, assignee: person }
-    props.handleSubmit(newItem);
-    setItem('');
-    setLevel('1');
-    setPerson('');
-  };
+  const[handleSubmit, handleChange, formData] = formLogic(addTask);
+
+  async function addTask(formData) {
+    try {
+      console.log("FORM DATA", formData);
+      const response = await axios.post(base, formData);
+      console.log(response);
+    } catch {
+      console.error(error);
+    }
+  }
 
   return (
       <Form id="form" data-testid="form" onSubmit={handleSubmit}>
@@ -25,9 +26,9 @@ function TodoForm(props) {
           <Form.Label>New Task</Form.Label>
           <Form.Control type="text"
                         data-testid="task-input"
-                        name="text"
+                        name="task"
                         placeholder="Task Description"
-                        onChange={e => setItem(e.target.value)} />
+                        onChange={handleChange} />
         </Form.Group>
 
         <Form.Group controlId="formBasicRange">
@@ -35,17 +36,18 @@ function TodoForm(props) {
           <Form.Control type="range"
                         data-testid="difficulty"
                         defaultValue="5"
-                        min="1" max="10" name="difficulty"
-                        onChange={e => setLevel(e.target.value)} />
+                        min="1" max="10"
+                        name="difficulty"
+                        onChange={handleChange} />
         </Form.Group>
 
         <Form.Group controlId="formItem">
           <Form.Label>Assign the Task</Form.Label>
           <Form.Control type="text"
                         data-testid="personInput"
-                        name="assignee"
+                        name="person"
                         placeholder="Name of Person"
-                        onChange={e => setPerson(e.target.value)} />
+                        onChange={handleChange} />
         </Form.Group>
 
         <Button variant="primary" type="submit" data-testid="task-submit">
