@@ -1,52 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
+import { useAxios, refetch } from 'use-axios';
+import { delete as del, post, put } from 'axios';
+import { getTasks, deleteTask, putTask } from '../generics/api-handler.js'
 import axios from 'axios';
-import useAxios from 'axios-hooks';
 import './list.css'
 
 function TodoList(props) {
 
   const base = 'https://at-taskmanager.herokuapp.com/task';
 
-  const [{ data: getData, loading: getLoading, error: getError }] = useAxios(
-    base
-  );
+  const list = getTasks();
 
-  async function updateData(id, currentStatus) {
-    try {
-      const response = axios.put(`${base}/${id}`, {
-        completed: !currentStatus
-      })
-      console.log(response);
-    } catch(err) {
-      console.log(err);
-    }
-  }
+  useEffect( () => {
+    document.title=`Task Manager: ${list.length} Open Tasks`
+  }, [list])
 
-
-  async function deleteData(id) {
-    try {
-      const response = axios.delete(`${base}/${id}`)
-      console.log(response);
-    } catch(err) {
-      console.log(err.message ? err.message : err);
-    }
-  }
-
-  if (getLoading) return <p>Loading...</p>
-  if (getError) return <p>Error!</p>
 
   return (
     <ListGroup id="todo-list" data-testid="todo-list">
-      {getData.map(item => (
+      {list.map(item => (
         <ListGroup.Item variant="dark" key={item._id} >
           <span className="list-item">
             <div className="list-item-headers">
               <div>Assigned to: {item.person}</div>
-              <div onClick={() => updateData(item._id, item.completed)}
+              <div onClick={() => putTask({id: item._id, status: !item.completed})}
                    className={`status complete-${item.completed.toString()}`}>
                 Status: {item.completed ? "Completed" : "Pending" }</div>
-              <button onClick={() => deleteData(item._id)}>X</button>
+              <button onClick={() => deleteTask(item._id)}>X</button>
             </div>
             <div>Task: {item.task}</div>
             <div className="difficulty">Difficulty: {item.difficulty}</div>

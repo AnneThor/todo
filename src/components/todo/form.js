@@ -1,27 +1,28 @@
 import React, {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import formLogic from '../generics/formLogic.js';
+import { postTask } from '../generics/api-handler.js'
 import axios from 'axios';
 
 function TodoForm(props) {
 
   const base = 'https://at-taskmanager.herokuapp.com/task';
 
-  const[handleSubmit, handleChange, formData] = formLogic(addTask);
+  const[handleSubmit, handleChange, formData] = formLogic(newTask)
 
-  async function addTask(formData) {
-    try {
-      console.log("FORM DATA", formData);
-      const response = await axios.post(base, formData);
-      console.log(response);
-    } catch {
-      console.error(error);
-    }
+  async function newTask(formData) {
+    await postTask(formData)
   }
+
+  if (props.loading) {
+    <p>Loading...</p>
+  } else {
 
   return (
       <Form id="form" data-testid="form" onSubmit={handleSubmit}>
+
         <h3>Add & Assign Activities</h3>
+
         <Form.Group controlId="formItem">
           <Form.Label>New Task</Form.Label>
           <Form.Control type="text"
@@ -56,6 +57,8 @@ function TodoForm(props) {
 
       </Form>
   );
+
+}
 
 }
 
