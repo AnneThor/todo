@@ -19,9 +19,10 @@ function TodoForm(props) {
   } else {
 
   return (
-      <Form id="form" data-testid="form" onSubmit={handleSubmit}>
 
-        <h3>Add & Assign Activities</h3>
+      <>
+      <header className="header">Add & Assign Activities</header>
+      <Form id="form" data-testid="form" onSubmit={handleSubmit}>
 
         <Form.Group controlId="formItem">
           <Form.Label>New Task</Form.Label>
@@ -56,6 +57,7 @@ function TodoForm(props) {
         </Button>
 
       </Form>
+      </>
   );
 
 }
