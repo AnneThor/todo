@@ -5,6 +5,12 @@ body, html {
     width: 100%;
 }
 
+.todo {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+}
+
 
 .header {
   margin: .5em auto;

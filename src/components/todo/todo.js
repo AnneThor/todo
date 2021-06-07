@@ -22,20 +22,15 @@ function ToDo() {
   }, [])
 
   return (
-    <Container fluid >
-      <Row>
-        <header className="header" data-testid="header">
-          {list.length} Tasks Remain!
-        </header>
-      </Row>
-      <Row className="todo">
+    <Container fluid className="todo">
+
         <Col>
           <TodoForm list={list} setList={setList}/>
         </Col>
         <Col>
           <TodoList loading={loading} list={list} />
         </Col>
-      </Row>
+
     </Container>
   );
 
