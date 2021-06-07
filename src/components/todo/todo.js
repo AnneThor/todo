@@ -9,22 +9,16 @@ import './todo.scss';
 function ToDo() {
 
   const base = 'https://at-taskmanager.herokuapp.com/task';
+
   const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(true)
 
-  // update doc title when list changes size
-  useEffect( () => {
-    document.title=`Task Manager: ${list.length} Open Tasks`
-  }, [list])
-
-  // passing empty array to say it doesn't track state updates
-  // i.e. only happens once, at the first rendering
-  useEffect( async () => {
-    try {
-      let list = await axios.get(base)
-      setList(list);
-    } catch(err) {
-      console.log(err)
-    }
+  useEffect(() => {
+    axios.get(base)
+    .then(reply => {
+      setList(reply.data);
+      setLoading(true);
+    })
   }, [])
 
   return (
@@ -36,11 +30,10 @@ function ToDo() {
       </Row>
       <Row className="todo">
         <Col>
-          <TodoForm />
+          <TodoForm list={list} setList={setList}/>
         </Col>
         <Col>
-          <TodoList
-            list = {list} />
+          <TodoList loading={loading} list={list} />
         </Col>
       </Row>
     </Container>
