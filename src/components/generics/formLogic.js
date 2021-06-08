@@ -16,6 +16,9 @@ function formLogic(callback) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!"difficulty" in formData) {
+      setFormData({ ...formData, difficulty: "5" })
+    }
     e.target.reset();
     callback(formData);
   }
