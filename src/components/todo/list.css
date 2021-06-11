@@ -1,7 +1,9 @@
-.list-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.filter-options {
+  width: 100%;
+  margin: .25em auto;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
 }
 
 .list-item-headers {

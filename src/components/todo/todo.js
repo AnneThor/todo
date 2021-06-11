@@ -8,29 +8,14 @@ import './todo.scss';
 
 function ToDo() {
 
-  const base = 'https://at-taskmanager.herokuapp.com/task';
-
-  const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    axios.get(base)
-    .then(reply => {
-      setList(reply.data);
-      setLoading(true);
-    })
-  }, [])
-
   return (
-    <Container fluid className="todo">
-
+    <Container fluid className="todo" data-testid="todo-wrapper">
         <Col>
-          <TodoForm list={list} setList={setList}/>
+          <TodoForm />
         </Col>
         <Col>
-          <TodoList loading={loading} list={list} />
+          <TodoList />
         </Col>
-
     </Container>
   );
 
