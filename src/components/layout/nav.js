@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Form, FormControl, Button } from 'react-bootstrap';
+
+import { BrowserRouter as Router, Route, Link} from "react-router-dom";
+import Login from '../auth/signin.js'
 
 function Nav() {
 
+  const [signin, setSignin] = useState(true)
+
   return (
-    <Navbar bg="dark justify-content-between" variant="dark">
-      <Navbar.Brand>Task Manager</Navbar.Brand>
-      <Form inline>
-        <FormControl type="text" placeholder="Username" className="mr-sm-2" />
-        <Button variant="outline-info" type="submit">Login</Button>
-      </Form>
-    </Navbar>
+    <Router>
+      <Navbar bg="dark justify-content-between" variant="dark">
+        <Link to="/">
+          <Navbar.Brand>Task Manager</Navbar.Brand>
+        </Link>
+          <Login />
+        <Link to="/signup">Signup</Link>
+      </Navbar>
+    </Router>
   )
 
 }
