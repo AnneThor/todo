@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Navbar, Form, FormControl, Button } from 'react-bootstrap';
-
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
+
+import Auth from '../auth/auth.js'
+import LoginProvider from '../auth/loginContext.js'
 import Login from '../auth/signin.js'
 
 function Nav() {
@@ -14,8 +16,7 @@ function Nav() {
         <Link to="/">
           <Navbar.Brand>Task Manager</Navbar.Brand>
         </Link>
-          <Login />
-        <Link to="/signup">Signup</Link>
+        <Login />
       </Navbar>
     </Router>
   )

@@ -5,10 +5,8 @@ import {When} from 'react-if';
 function Auth(props) {
 
   const userContext = useContext(LoginContext)
-
   const canDoThing = props.capability ? userContext.can(props.capability) : true ;
-
-  const okToRender = userContext.isLoggedIn && canDoThing;
+  const okToRender = userContext.loggedIn && canDoThing;
 
   return (
     <When condition={okToRender}>

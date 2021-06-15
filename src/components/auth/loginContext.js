@@ -15,6 +15,7 @@ function LoginProvider(props) {
 
   // This is going to be the user record from the API
   const [user, setUser] = useState({});
+  const [capabilities, setCapabilities]  = useState([]);
 
   const validateToken = (token) => {
     try {
@@ -36,7 +37,7 @@ function LoginProvider(props) {
   }
 
   const can = (permission) => {
-    return user.capabilities && user.capabilities.includes(permission);
+    return capabilities && capabilities.includes(permission);
   }
 
   const login = async (input) => {
@@ -46,11 +47,27 @@ function LoginProvider(props) {
         .auth( input.username, input.password );
 
         const {token} = response.body;
-
+        setLoggedIn(true);
+        setCapabilities(response.body.user.capabilities)
         validateToken(token);
 
     } catch(e) {
       console.warn('Login Attempt Failed')
+    }
+  }
+
+  const signup = async(input) => {
+    console.log("INPUT", input)
+    const API = `https://at-taskmanager.herokuapp.com/signup`;
+    try {
+      const response = await superagent.post(API)
+      .send(input);
+      const { token } = response.body;
+      setLoggedIn(true);
+      setCapabilities(response.body.user.capabilities);
+      validateToken(token)
+    } catch(e) {
+      console.warn('Sign up failure')
     }
   }
 
@@ -64,7 +81,7 @@ function LoginProvider(props) {
     logout,
     can,
     user, setUser,
-    loggedIn
+    loggedIn, capabilities, signup
   };
 
   return (

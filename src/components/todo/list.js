@@ -6,6 +6,7 @@ import axios, { delete as del, post, put } from 'axios';
 import { getTasks, deleteTask, putTask } from '../generics/api-handler.js'
 import { USER_PER_PAGE } from '../../context/paginate.js';
 import Pagination from '../generics/pagination.js'
+import Auth from '../auth/auth.js';
 import './list.css'
 
 function TodoList(props) {
@@ -58,36 +59,40 @@ function TodoList(props) {
   }
 
   return (
-    <>
-    <h3 className="header" data-testid="header">
-      {list.length} Tasks in List!
-    </h3>
+  <>
+    <h3 className="header" data-testid="header">{list.length} Tasks in List!</h3>
     <ButtonGroup size="sm" className="filter-options" aria-label="Filter options" data-testid="filter-option">
       <Button variant="secondary" value="status" onClick={() => listToggle.sortBy("status")}>Status</Button>
       <Button variant="secondary" value="difficulty" onClick={() => listToggle.sortBy("difficulty")}>Difficulty</Button>
       <Button variant="secondary" value="person" onClick={() => listToggle.sortBy("person")}>Assignee</Button>
       <Button variant="secondary" value="onlyOpen" onClick={() => listToggle.sortBy("onlyOpen")}>Pending</Button>
     </ButtonGroup>
-    <ListGroup id="todo-list" data-testid="todo-list">
-      {selectedUsers.map(item => (
-        <ListGroup.Item variant="dark" key={item._id} >
-          <span className="list-item">
-            <div className="list-item-headers">
-              <Button data-testid="completed"
-                      variant={item.completed ? "success" : "danger"}
-                      onClick={() => putTask({id: item._id, status: !item.completed})} >
-              {item.completed ? "Completed" : "Pending" }</Button>
+    <Auth capability="read">
+      <ListGroup id="todo-list" data-testid="todo-list">
+        {selectedUsers.map(item => (
+          <ListGroup.Item variant="dark" key={item._id} >
+            <span className="list-item">
+              <div className="list-item-headers">
+              <Auth capability="update">
+                <Button data-testid="completed"
+                  variant={item.completed ? "success" : "danger"}
+                  onClick={() => putTask({id: item._id, status: !item.completed})} >
+                  {item.completed ? "Completed" : "Pending" }</Button>
+              </Auth>
               <div>{item.person}</div>
-              <Button variant="dark" onClick={() => deleted(item._id)}>X</Button>
-            </div>
-            <div className="task">Task: {item.task}</div>
-            <div className="difficulty">Difficulty: {item.difficulty}</div>
-          </span>
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
+              <Auth capability="delete">
+                <Button variant="dark" onClick={() => deleted(item._id)}>X</Button>
+              </Auth>
+              </div>
+              <div className="task">Task: {item.task}</div>
+              <div className="difficulty">Difficulty: {item.difficulty}</div>
+            </span>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+    </Auth>
     <Pagination totalPages={totalPages} onClick={handlePageClick} data-testid="pagination" />
-    </>
+  </>
   );
 
 }
