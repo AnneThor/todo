@@ -22,5 +22,11 @@ npm start
 ## Tests
 Functionality Tests: npm test
 
+Front end functionality for different levels of access can be tested with the following credentials (username: password)
+
+- Admin: Admin
+- Editor: Editor
+- User: User
+
 ## UML at Week 4
 ![UML at Week 1 Functionality](./assets/todo-week1.png)
