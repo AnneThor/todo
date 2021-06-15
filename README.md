@@ -28,5 +28,7 @@ Front end functionality for different levels of access can be tested with the fo
 - Editor: Editor
 - User: User
 
+You can also create your own persistent username/passwords at different access levels to test the end to end functionality.
+
 ## UML at Week 4
 ![UML at Week 1 Functionality](./assets/todo-week1.png)
